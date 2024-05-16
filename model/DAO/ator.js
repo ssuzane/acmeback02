@@ -111,6 +111,20 @@ const updadeActors = async function(dadosAtor, idAtor){
     }
 }
 
+const deleteActors = async function(id){
+
+    try {
+        
+        let sql = `delete from tbl_ator where tbl_ator.id = ${id}`
+        
+        let rsFilmes = await prisma.$queryRawUnsafe(sql)
+
+        return rsFilmes
+    }catch(error) {
+        return false
+    }
+}
+
 const selectbyActorsGenero = async function(id){
 
     try {
@@ -131,5 +145,6 @@ module.exports = {
     selectByIdActors,
     insertAtor,
     updadeActors,
+    deleteActors,
     selectbyActorsGenero
 }

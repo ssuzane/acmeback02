@@ -166,11 +166,42 @@ const setAtualizarAtor = async function (dadosAtor,contentType, idAtor){
     }
 }
 
+const setExcluiAtor = async function(id){
+
+    try {
+        let idAtor = id
+
+        if(idAtor == '' || idAtor == undefined || isNaN(idAtor) || idAtor == null){
+            return message.ERROR_INVALID_ID // 400
+        }else{
+
+            let atorId = await atorDAO.selectByIdActors(idAtor)
+
+            if(atorId.length > 0) { 
+
+                let atorDeletado = await atorDAO.deleteActors(idAtor)
+
+                if(atorDeletado){
+                    return message.SUCESS_DELETED_ITEM //200
+                }else{
+                    return message.ERRO_INTERNAL_SERVER_DB //500
+                }
+
+            }else{
+                return message.ERROR_NOT_FOUND //404
+            }
+        }
+    }catch(error) {
+        return message.ERRO_INTERNAL_SERVER //500
+    }
+}
+
 
 
 module.exports = {
     getListarAtores,
     getBuscarAtor,
     setIserirNovoAtor,
+    setExcluiAtor,
     setAtualizarAtor
 }
